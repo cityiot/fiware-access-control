@@ -1,0 +1,212 @@
+# Copyright 2019 Tampere University
+# This software was developed as a part of the CityIoT project: https://www.cityiot.fi/english
+# This source code is licensed under the 3-clause BSD license. See license.txt in the repository root directory.
+# Author(s): Mikko Nurminen <mikko.nurminen@tuni.fi>
+
+# https://github.com/ging/fiware-idm/tree/master/extras/docker
+# and
+# https://github.com/Fiware/tutorials.PEP-Proxy/blob/master/docker-compose/orion.yml
+#
+# Docker Hub tags have been chosen to reflect FIWARE release 7.5.1 as specified in
+# https://github.com/Fiware/catalogue/releases,
+
+version: "3.5"
+
+services:
+  mysql-keyrock:
+    image: mysql/mysql-server:5.7
+    deploy:
+      mode: global
+      restart_policy:
+        condition: any
+      update_config:
+        parallelism: 1
+        delay: 1m
+    volumes:
+      - vol-mysql:/var/lib/mysql
+    environment:
+      # Change these settings to your liking
+      - MYSQL_ROOT_PASSWORD=idm_root_password
+      - MYSQL_DATABASE=idm_db # Must be the same as in - IDM_DB_NAME
+      - MYSQL_USER=idm_user # Must be the same as in - IDM_DB_USER
+      - MYSQL_PASSWORD=idm_users_password # Must be the same as in - IDM_DB_PASS
+    networks:
+      - cityiot
+
+  keyrock-idm:
+    image: fiware/idm:FIWARE_7.7
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+      update_config:
+        parallelism: 1
+    depends_on:
+      - mysql-keyrock
+      - authzforce
+    environment:
+      - IDM_DB_HOST=mysql-keyrock
+      - IDM_DB_PASS=idm_users_password
+      - IDM_DB_USER=idm_username
+      - IDM_DB_NAME=idm_db
+      - IDM_DIALECT=mysql
+      - IDM_DB_PORT=3306
+      - IDM_SESSION_SECRET=ENTER_RANDOM_STRING_HERE
+      - IDM_ENCRYPTION_KEY=NTER_RANDOM_STRING_HERE
+      - IDM_PORT=3005
+      - IDM_HTTPS_ENABLED=false
+      - IDM_ADMIN_USER=tester-admin
+      - IDM_ADMIN_EMAIL=tester-admin@tester.com
+      - IDM_ADMIN_PASS=tester-2020
+      - IDM_USAGE_CONTROL_ENABLED=false
+      - IDM_PDP_LEVEL=advanced
+      - IDM_AUTHZFORCE_ENABLED=true
+      - IDM_AUTHZFORCE_HOST=authzforce
+      - IDM_AUTHZFORCE_PORT=8080
+      - IDM_USAGE_CONTROL_ENABLED=false
+      - IDM_HOST= # Enter your Keyrock hostname here!
+      - IDM_CORS_ENABLED=true
+      - IDM_CORS_ALLOWED_HEADERS=Origin,Accept,Content-Type,X-Requested-With,X-CSRF-Token,X-Subject-Token,X-Auth-Token
+      - IDM_CORS_EXPOSED_HEADERS=Origin,Accept,Content-Type,X-Requested-With,X-CSRF-Token,X-Subject-Token
+    volumes:
+      - ./config/keyrock7.7_config.js:/opt/fiware-idm/config.js
+    networks:
+      - cityiot
+
+  wilma-proxy-orion:
+    image: minimalisti/fiware-wilma:0.2
+    depends_on:
+      - keyrock-idm
+      - authzforce
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+      update_config:
+        parallelism: 1
+    environment:
+      - PEP_PROXY_PORT=1027
+      - PEP_PROXY_HTTPS_ENABLED=false
+      - PEP_PROXY_IDM_HOST=keyrock-idm
+      - PEP_PROXY_IDM_PORT=3005
+      - PEP_PROXY_IDM_SSL_ENABLED=false
+      - PEP_PROXY_APP_HOST=orion
+      - PEP_PROXY_APP_PORT=1026
+      - PEP_PROXY_ORG_ENABLED=false
+      - PEP_PROXY_APP_ID=ENTER_ORION_APP_ID_FROM_KEYROCK # For help on getting this value, read the README.md
+      - PEP_PROXY_USERNAME=ENTER_PEP_PROXY_USERNAME_FROM_KEYROCK # For help on getting this value, read the README.md
+      - PEP_PASSWORD=ENTER_PEP_PROXY_PASSWORD_FROM_KEYROCK # For help on getting this value, read the README.md
+      - PEP_PROXY_MAGIC_KEY=ENTER_RANDOM_STRING_HERE
+      - PEP_TOKEN_SECRET=ENTER_RANDOM_STRING_HERE
+      # for enabling AuthZForce
+      - PEP_PROXY_PDP=authzforce
+      - PEP_PROXY_AZF_PROTOCOL=http
+      # Host is the AuthZForce service from this file
+      - PEP_PROXY_AZF_HOST=authzforce
+      - PEP_PROXY_AZF_PORT=8080
+      - PEP_PROXY_AUTH_ENABLED=true
+    volumes:
+      - ./config/wilma7.7_config.js:/opt/fiware-pep-proxy/config.js
+    networks:
+      - cityiot
+
+  wilma-proxy-quantum-leap:
+    image: minimalisti/fiware-wilma:0.2
+    depends_on:
+      - keyrock-idm
+      - authzforce
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+      update_config:
+        parallelism: 1
+    environment:
+      - PEP_PROXY_PORT=1027
+      - PEP_PROXY_HTTPS_ENABLED=false
+      - PEP_PROXY_IDM_HOST=keyrock-idm
+      - PEP_PROXY_IDM_PORT=3005
+      - PEP_PROXY_IDM_SSL_ENABLED=false
+      - PEP_PROXY_APP_HOST=ql_quantumleap
+      - PEP_PROXY_APP_PORT=8668
+      - PEP_PROXY_ORG_ENABLED=false
+      - PEP_PROXY_APP_ID=ENTER_ORION_APP_ID_FROM_KEYROCK # For help on getting this value, read the README.md
+      - PEP_PROXY_USERNAME=ENTER_PEP_PROXY_USERNAME_FROM_KEYROCK # For help on getting this value, read the README.md
+      - PEP_PASSWORD=ENTER_PEP_PROXY_PASSWORD_FROM_KEYROCK # For help on getting this value, read the README.md
+      - PEP_PROXY_MAGIC_KEY=ENTER_RANDOM_STRING_HERE
+      - PEP_TOKEN_SECRET=ENTER_RANDOM_STRING_HERE
+      # for enabling AuthZForce
+      - PEP_PROXY_PDP=authzforce
+      - PEP_PROXY_AZF_PROTOCOL=http
+      # Host is the AuthZForce service from this file
+      - PEP_PROXY_AZF_HOST=authzforce
+      - PEP_PROXY_AZF_PORT=8080
+      - PEP_PROXY_AUTH_ENABLED=true
+    volumes:
+      - ./config/wilma7.7_config.js:/opt/fiware-pep-proxy/config.js
+    networks:
+      - cityiot
+
+  wilma-proxy-authzforce:
+    image: minimalisti/fiware-wilma:0.2
+    depends_on:
+      - keyrock-idm
+      - authzforce
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+      update_config:
+        parallelism: 1
+    environment:
+      - PEP_PROXY_PORT=1027
+      - PEP_PROXY_HTTPS_ENABLED=false
+      - PEP_PROXY_IDM_HOST=keyrock-idm
+      - PEP_PROXY_IDM_PORT=3005
+      - PEP_PROXY_IDM_SSL_ENABLED=false
+      - PEP_PROXY_APP_HOST=authzforce
+      - PEP_PROXY_APP_PORT=8080
+      - PEP_PROXY_ORG_ENABLED=false
+      - PEP_PROXY_APP_ID=ENTER_ORION_APP_ID_FROM_KEYROCK # For help on getting this value, read the README.md
+      - PEP_PROXY_USERNAME=ENTER_PEP_PROXY_USERNAME_FROM_KEYROCK # For help on getting this value, read the README.md
+      - PEP_PASSWORD=ENTER_PEP_PROXY_PASSWORD_FROM_KEYROCK # For help on getting this value, read the README.md
+      - PEP_PROXY_MAGIC_KEY=ENTER_RANDOM_STRING_HERE
+      - PEP_TOKEN_SECRET=ENTER_RANDOM_STRING_HERE
+      # for enabling AuthZForce
+      - PEP_PROXY_PDP=authzforce
+      - PEP_PROXY_AZF_PROTOCOL=http
+      # Host is the AuthZForce service from this file
+      - PEP_PROXY_AZF_HOST=authzforce
+      - PEP_PROXY_AZF_PORT=8080
+      - PEP_PROXY_AUTH_ENABLED=true
+    volumes:
+      - ./config/wilma7.7_config.js:/opt/fiware-pep-proxy/config.js
+    networks:
+      - cityiot
+
+  authzforce:
+    image: fiware/authzforce-ce-server:release-8.1.0
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+      update_config:
+        parallelism: 1
+    healthcheck:
+      test: curl --fail -s http://localhost:8080/authzforce-ce/version || exit 1
+    networks:
+      - cityiot
+
+volumes:
+  vol-mysql:
+    external: true
+    name: keyrock-mysql
+  authzforce_domains:
+    external: true
+    name: authzforce_domains
+
+networks:
+  cityiot:
+    driver: overlay
+    external: true
+    name: ${CITYIOT_NETWORK_NAME:-cityiot}

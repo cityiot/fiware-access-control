@@ -1,0 +1,74 @@
+
+<!-- Begin access rule policy for role Admin (b6987d48-5038-431f-8615-96c403f808e4) in application Wilma protected AuthZForce (cbdd4987-61ef-46c0-91c0-4ea9e7c52cee) -->
+    <ns4:Policy PolicyId="b6987d48-5038-431f-8615-96c403f808e4" Version="1.0" RuleCombiningAlgId="urn:oasis:names:tc:xacml:3.0:rule-combining-algorithm:deny-unless-permit">
+        <ns4:Description>Role  Admin (id: b6987d48-5038-431f-8615-96c403f808e4) from application Wilma protected AuthZForce (id: cbdd4987-61ef-46c0-91c0-4ea9e7c52cee)</ns4:Description>
+        <ns4:Target>
+            <ns4:AnyOf>
+                <ns4:AllOf>
+                    <ns4:Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                        <ns4:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">cbdd4987-61ef-46c0-91c0-4ea9e7c52cee</ns4:AttributeValue>
+                        <ns4:AttributeDesignator Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"/>
+                    </ns4:Match>
+                </ns4:AllOf>
+            </ns4:AnyOf>
+        </ns4:Target>
+        <ns4:Rule RuleId="ef0c6ce7-5b9e-48cc-8db5-38f9dc124fe1" Effect="Permit">
+            <ns4:Description>Access rule for role b6987d48-5038-431f-8615-96c403f808e4</ns4:Description>
+            <ns4:Target>
+                <ns4:AnyOf>
+                    <ns4:AllOf>
+                        <ns4:Match MatchId="urn:oasis:names:tc:xacml:3.0:function:string-starts-with">
+                            <ns4:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">/</ns4:AttributeValue>
+                            <ns4:AttributeDesignator Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" AttributeId="urn:thales:xacml:2.0:resource:sub-resource-id" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"/>
+                        </ns4:Match>
+                    </ns4:AllOf>
+                </ns4:AnyOf> 
+            <ns4:AnyOf>
+              <ns4:AllOf>
+                <ns4:Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                    <ns4:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">GET</ns4:AttributeValue>
+                    <ns4:AttributeDesignator Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action" AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"/>
+                </ns4:Match>
+              </ns4:AllOf>
+              <ns4:AllOf>
+                  <ns4:Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                      <ns4:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">HEAD</ns4:AttributeValue>
+                      <ns4:AttributeDesignator Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action" AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"/>
+                  </ns4:Match>
+              </ns4:AllOf>
+              <ns4:AllOf>
+                  <ns4:Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                      <ns4:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">POST</ns4:AttributeValue>
+                      <ns4:AttributeDesignator Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action" AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"/>
+                  </ns4:Match>
+              </ns4:AllOf>
+              <ns4:AllOf>
+                  <ns4:Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                      <ns4:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">DELETE</ns4:AttributeValue>
+                      <ns4:AttributeDesignator Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action" AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"/>
+                  </ns4:Match>
+              </ns4:AllOf>
+              <ns4:AllOf>
+                <ns4:Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                    <ns4:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">PATCH</ns4:AttributeValue>
+                    <ns4:AttributeDesignator Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action" AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"/>
+                </ns4:Match>
+            </ns4:AllOf>
+            <ns4:AllOf>
+              <ns4:Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                  <ns4:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">PUT</ns4:AttributeValue>
+                  <ns4:AttributeDesignator Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action" AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"/>
+              </ns4:Match>
+          </ns4:AllOf>
+        </ns4:AnyOf>
+        </ns4:Target>
+        <ns4:Condition>
+            <ns4:Apply FunctionId="urn:oasis:names:tc:xacml:3.0:function:any-of">
+                <ns4:Function FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal"/>
+                <ns4:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">b6987d48-5038-431f-8615-96c403f808e4</ns4:AttributeValue>
+                <ns4:AttributeDesignator Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" AttributeId="urn:oasis:names:tc:xacml:2.0:subject:role" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="false"/>
+            </ns4:Apply>
+        </ns4:Condition>
+    </ns4:Rule>
+</ns4:Policy>
+<!-- End of access rule policy for role Admin (b6987d48-5038-431f-8615-96c403f808e4) in application Wilma protected AuthZForce (cbdd4987-61ef-46c0-91c0-4ea9e7c52cee) -->

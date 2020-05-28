@@ -1,0 +1,19 @@
+{
+    "rule_id": "orion-complex-rule-000001",
+    "rule_description": "Rule for allowing GET and POST for Orion entities and version endpoint.",
+    "role_id": "orion-app-role-id-here",
+    "path_rules": [
+        {
+            "path": "/v2/entities.*",
+            "is_regex": true
+        },
+        {
+            "path": "/version",
+            "is_regex": false
+        }
+    ],
+    "method_rules": [
+        "GET",
+        "POST"
+    ]
+}

@@ -1,0 +1,19 @@
+2. Building new Wilma Docker images to enable sending new attributes (FIWARE headers, query string, ...) with access decision requests from Wilma to AuthZForce
+-------------------------------------------------------------------------------
+If you need to extend the access decision requests Wilma sends, you need to modify the Wilma Docker image.
+
+There are images available for modified Wilma at https://hub.docker.com/r/minimalisti/fiware-wilma. But if that image needs to be changed, you need to do the following steps.
+
+If Wilma Docker image has to be rebuilt, general process is:
+  build locally -> image to Docker Hub -> use on server Docker Compose file(s)
+- Wilma GitHub repository (https://github.com/ging/fiware-pep-proxy) is not in CityIoT repository, but is locally in the server 130.230.142.107 at platform/experiments/fiware_access_control/fiware_docker_repositories/fiware-pep-proxy directory
+- the Wilma repo's development Dockerfile can be used as-is: platform/experiments/fiware_access_control/fiware_docker_repositories/fiware-pep-proxy/Dockerfile-sample
+- edit platform/experiments/fiware_access_control/fiware_docker_repositories/fiware-pep-proxy/lib/azf.js to make the required changes the access decision request. The files has some examples, and https://stackoverflow.com/questions/54672389/how-can-fiware-services-and-service-paths-be-used-in-xacml-rules provides more information
+- sending the created image to Docker Hub
+  docker build --file Dockerfile-sample --tag minimalisti/fiware-wilma:0.2 .
+
+  docker login && docker push minimalisti/fiware-wilma:0.2
+
+- change platform/experiments/fiware_access_control/advanced_access_control/docker-compose-accesscontrol.yml to use the new image
+
+- see advanced_access_control/README.md for information on how to create the needed XACML rules to use the modified Wilma's access decison request's new attributes.

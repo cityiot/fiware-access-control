@@ -1,0 +1,17 @@
+{
+  "name": "create_policies",
+  "version": "1.0.0",
+  "description": "",
+  "main": "create_policies.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node create_policies.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "follow-redirects": "^1.11.0",
+    "unirest": "^0.6.0",
+    "yargs": "^15.3.1"
+  }
+}

@@ -1,0 +1,69 @@
+
+<!-- Begin access rule policy for role streetlight reader (cf605431-64a6-4cbb-9564-ede0e364ea22) in application Wilma protected Quantum Leap (09f1b748-7f36-4c95-9a58-2103dfe6c8cc) -->
+    <ns4:Policy PolicyId="cf605431-64a6-4cbb-9564-ede0e364ea22" Version="1.0" RuleCombiningAlgId="urn:oasis:names:tc:xacml:3.0:rule-combining-algorithm:deny-unless-permit">
+        <ns4:Description>Role  streetlight reader (id: cf605431-64a6-4cbb-9564-ede0e364ea22) from application Wilma protected Quantum Leap (id: 09f1b748-7f36-4c95-9a58-2103dfe6c8cc)</ns4:Description>
+        <ns4:Target>
+            <ns4:AnyOf>
+                <ns4:AllOf>
+                    <ns4:Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                        <ns4:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">09f1b748-7f36-4c95-9a58-2103dfe6c8cc</ns4:AttributeValue>
+                        <ns4:AttributeDesignator Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"/>
+                    </ns4:Match>
+                </ns4:AllOf>
+            </ns4:AnyOf>
+        </ns4:Target>
+        <ns4:Rule RuleId="ef0c6ce7-5b9e-48cc-8db5-38f9dc124fe1" Effect="Permit">
+            <ns4:Description>Access rule for role cf605431-64a6-4cbb-9564-ede0e364ea22</ns4:Description>
+            <ns4:Target>
+                <ns4:AnyOf>
+                    <ns4:AllOf>
+                        <ns4:Match MatchId="urn:oasis:names:tc:xacml:3.0:function:string-starts-with">
+                            <ns4:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">/v2</ns4:AttributeValue>
+                            <ns4:AttributeDesignator Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" AttributeId="urn:thales:xacml:2.0:resource:sub-resource-id" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"/>
+                        </ns4:Match>
+                    </ns4:AllOf>
+                </ns4:AnyOf>
+                <ns4:AnyOf>
+                  <ns4:AllOf>
+                      <ns4:Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                          <ns4:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">GET</ns4:AttributeValue>
+                          <ns4:AttributeDesignator Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action" AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"/>
+                      </ns4:Match>
+                  </ns4:AllOf>
+                  <ns4:AllOf>
+                      <ns4:Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                          <ns4:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">HEAD</ns4:AttributeValue>
+                          <ns4:AttributeDesignator Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action" AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"/>
+                      </ns4:Match>
+                  </ns4:AllOf>
+                </ns4:AnyOf>
+
+                <ns4:AnyOf>
+                  <ns4:AllOf>
+                    <ns4:Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                      <ns4:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">streetlight</ns4:AttributeValue>
+                      <ns4:AttributeDesignator Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" AttributeId="fiware-service" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true" />
+                    </ns4:Match>
+                  </ns4:AllOf>
+                </ns4:AnyOf>
+                <!-- FIWARE servicepath commented out... for now. :-)
+                <ns4:AnyOf>
+                  <ns4:AllOf>
+                    <ns4:Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                      <ns4:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">/#</ns4:AttributeValue>
+                      <ns4:AttributeDesignator Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" AttributeId="fiware-servicepath" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="false" />
+                    </ns4:Match>
+                  </ns4:AllOf>
+                </ns4:AnyOf>
+                -->
+                    </ns4:Target>
+                    <ns4:Condition>
+                        <ns4:Apply FunctionId="urn:oasis:names:tc:xacml:3.0:function:any-of">
+                            <Function FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal"/>
+                            <ns4:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">cf605431-64a6-4cbb-9564-ede0e364ea22</ns4:AttributeValue>
+                            <ns4:AttributeDesignator Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" AttributeId="urn:oasis:names:tc:xacml:2.0:subject:role" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="false"/>
+                        </ns4:Apply>
+                    </ns4:Condition>
+                </ns4:Rule>
+            </ns4:Policy>
+<!-- End access rules for role streetlight reader (cf605431-64a6-4cbb-9564-ede0e364ea22) -->

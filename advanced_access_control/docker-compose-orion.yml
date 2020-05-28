@@ -1,0 +1,42 @@
+# Copyright 2019 Tampere University
+# This software was developed as a part of the CityIoT project: https://www.cityiot.fi/english
+# This source code is licensed under the 3-clause BSD license. See license.txt in the repository root directory.
+# Author(s): Mikko Nurminen <mikko.nurminen@tuni.fi>
+
+# https://github.com/ging/fiware-idm/tree/master/extras/docker
+# and
+# https://github.com/Fiware/tutorials.PEP-Proxy/blob/master/docker-compose/orion.yml
+#
+# Docker Hub tags have been chosen to reflect FIWARE release 7.5.1 as specified in
+# https://github.com/Fiware/catalogue/releases
+
+
+version: "3.5"
+
+services:
+
+  orion:
+    image: fiware/orion:${ORION_VERSION:-2.2.0}
+    depends_on:
+      - ${MONGO_STACK_NAME:-mongo-rs}_${MONGO_SERVICE_URI:-mongodb}
+    command: -logLevel ${ORION_LOG_LEVEL:-WARN} -dbhost ${MONGO_SERVICE_URI:-"mongodb"} -rplSet ${REPLICASET_NAME:-rs} -dbTimeout 20000 -httpTimeout 45000
+    deploy:
+      replicas: ${ORION_REPLICAS:-3}
+      restart_policy:
+        condition: any
+      update_config:
+        parallelism: 1
+        delay: 1m
+    networks:
+      - cityiot
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://0.0.0.0:1026/version"]
+      interval: 1m
+      timeout: 30s
+      retries: 3
+
+networks:
+  cityiot:
+    driver: overlay
+    external: true
+    name: ${CITYIOT_NETWORK_NAME:-cityiot}

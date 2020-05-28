@@ -1,0 +1,15 @@
+{
+  "name": "get_an_access_token",
+  "version": "1.0.0",
+  "description": "",
+  "main": "get_an_access_token.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "license": "ISC",
+  "dependencies": {
+    "request": "2.88.0"
+  }
+}
