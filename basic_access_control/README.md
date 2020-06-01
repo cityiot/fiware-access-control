@@ -46,6 +46,22 @@ After the containers are running, it is time to look at how we can manage Keyroc
 **NOTE: some assembly needed.** Examples in this document can be used with the running Docker system with small modifications, like filling in the correct variable values for access tokens, app IDs, etc. In the requests and responses in this documents the values are just placeholders, for example _$ACCESSOKEN_.
 
 #### Retrieving an access token to Keyrock
+You can use one of two methods for getting the access token you need to access resources  in Keyrock.
+
+##### Method 1. Get the needed Keyrock token and OAuth2 user token
+You can use the Node.js app from the directory _scripts/get_access_tokens_for_apps_in_keyrock_ your console to get the admin access key for Keyrock. You must have Node.js installed. Go to the directory and run  _$ npm install_ and _$ npm start -- --help_ to get started. You should see:
+Options:
+  --version              Show version number                           [boolean]
+  --hostURL, --url       Keyrock server URL                           [required]
+  --hostPort, --port     Keyrock server port
+  --email, -e            Keyrock user's email                         [required]
+  --password, -p         Keyrock user's password                      [required]
+  --getKeyrockToken, -g  Get token to access Keyrock's own resources   [boolean]
+  --help, -h             Show help                                     [boolean]
+
+Use the token given after "Token for accessing Keyrock:" as the $KEYROCK_TOKEN in the following steps.
+
+##### Method 2. Use Keyrock API
 The user must get an access key to access Keyrock resources through its API. The user can use the either the API's password method, or the token method to fetch an access key. In password method the requests body must include a JSON with an existing Keyrock user's email (not username!) and password.
 
 In the response for each request a new _X-Subject-Token_ will be created. _X-Subject-Token_ header value in response can be used as the _X-Auth-token_ header in following requests to Keyrock.

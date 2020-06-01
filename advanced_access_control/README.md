@@ -150,7 +150,7 @@ Getting the XACML for the access rules from application's domain in AuthZForce
 
 Get the needed Keyrock token and OAuth2 user token
 -----------------------------------------------------
-You can use the Node.js app from the directory _scripts/get_access_tokens_for_apps_in_keyrock_ your console to get the admin access key for Keyrock. Go to the directory and run _$ npm start -- --help_ to get started. You shouls see:
+You can use the Node.js app from the directory _scripts/get_access_tokens_for_apps_in_keyrock_ your console to get the admin access key for Keyrock. Go to the directory and run  _$ npm install_ and _$ npm start -- --help_ to get started. You shouls see:
 Options:
   --version              Show version number                           [boolean]
   --hostURL, --url       Keyrock server URL                           [required]
@@ -165,7 +165,7 @@ Use the token given after "Token for accessing Keyrock:" as the $KEYROCK_TOKEN i
 
 Next your should create the needed roles in Keyrock. 
 
-There is a convinience Node app in the directory_scripts/create_policies_ that you can use to create the needed XACML rules based on FIWARE service, and if the user should have read or write access. The script expects that the user roles are named according to a certain templates, as the name of the user role is parsed to configure the access rule. The following user names have a meaning for the script:
+There is a convinience Node app in the directory _scripts/create_policies_ that you can use to create the needed XACML rules based on FIWARE service, and if the user should have read or write access. The script expects that the user roles are named according to a certain templates, as the name of the user role is parsed to configure the access rule. The following user names have a meaning for the script:
 
 | User name                   |  Permissions of the created access rules                      |
 |-----------------------------|:-------------------------------------------------------------:|
@@ -174,7 +174,7 @@ There is a convinience Node app in the directory_scripts/create_policies_ that y
 | FIWARE_SERVICE_NAME writer  | Write access to FIWARE service FIWARE_SERVICE_NAME            |
 | Read all services           | Read access to all services                                   |
 
-You can get run the script in the directory with _npm start -- --help_. After you provide the required parameters, a directory 'access_policies' is created that holds the XACML access control rules. The rules are named following by the following template: appName + '-' + role.name + '_policies.xml'. But before you run the Node app, you must create the user roles for the applications in Keyrock.
+You can run the script by changing in the directory and running _$ npm install_ _$ npm start -- --help_. After you provide the required parameters, a directory 'access_policies' is created that holds the XACML access control rules. The rules are named following by the following template: appName + '-' + role.name + '_policies.xml'. But before you run the Node app, you must create the user roles for the applications in Keyrock.
 
 Create a role in  Keyrock, assign it to user
 -----------------------------------------------------

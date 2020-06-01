@@ -89,19 +89,19 @@ User has to have both Docker and Docker Compose installed.
 
 Docker Compose files used for basic and advanced levels can be found in this repo:
 
-- Basic: /platform/experiments/fiware_access_control/basic_access_control/docker-compose-basic-level.yml
-- Advanced: /platform/experiments/fiware_access_control/advanced_access_control/docker-compose--advanced-level.yml
+- Basic: /basic_access_control/docker-compose-basic-level.yml
+- Advanced: /advanced_access_control/docker-compose--advanced-level.yml
 
 Settings files for Keyrock and Wilma are in this repo,too:
 Basic access control:
 
-- Keyrock IDM configuration: /platform/experiments/fiware_access_control/basic_access_control/config/keyrock_config7.7.js
-- Wilma PEP configuration: /platform/experiments/fiware_access_control/basic_access_control/config/wilma_config7.7.js
+- Keyrock IDM configuration: /basic_access_control/config/keyrock_config7.7.js
+- Wilma PEP configuration: /basic_access_control/config/wilma_config7.7.js
 
 Advanced access control:
 
-- Keyrock IDM configuration: /platform/experiments/fiware_access_control/advanced_access_control/config/keyrock_config7.7.js
-- Wilma PEP configuration: /platform/experiments/fiware_access_control/advanced_access_control/config/wilma_config7.7.js
+- Keyrock IDM configuration: /advanced_access_control/config/keyrock_config7.7.js
+- Wilma PEP configuration: /advanced_access_control/config/wilma_config7.7.js
 
 ## Next steps
 It is suggested that as a next step you now go to the _/platform/experiments/fiware_access_control/basic_access_control/_ directory and try the basic level 2 access control Docker compose, as is described in the README.md in that directory. From the basic level setup you can move on to the advanced access control setup, which you can find in the _/platform/experiments/fiware_access_control/advanced_access_control/_ directory. 
