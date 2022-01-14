@@ -13,7 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "follow-redirects": "^1.11.0",
+    "follow-redirects": "^1.14.7",
     "get_an_access_token": "file:./get_an_access_token",
     "unirest": "^0.6.0",
     "yargs": "^14.2.0"
