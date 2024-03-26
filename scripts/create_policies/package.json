@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "follow-redirects": "^1.15.5",
+    "follow-redirects": "^1.15.6",
     "unirest": "^0.6.0",
     "yargs": "^15.3.1"
   }
